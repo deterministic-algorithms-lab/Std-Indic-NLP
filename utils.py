@@ -2,21 +2,30 @@ import os
 import re
 
 def execute(command) :
+    '''
+    Executes the command, exits, and doesn't execute any further command, if the current one fails
+    '''
     x = os.system(command)
     if x>>8!=0 : 
         exit(1)
 
-#Shuffle a monolingual file
 def shuf_mono(filename) :
+    '''
+    Shuffles a monolingual file
+    '''
     assert os.path.isfile(filename)
 
-#Shuffle parallel language data files
 def shuf_pll(lg_pair: str, para_folder) :
+    '''
+    Shuffles parallel language data files
+    '''
     lgs = lg_pair.split('-')
     assert os.path.isfile(os.path.join(para_folder, lg_pair+'.'+lgs[0])) and os.path.isfile(os.path.join(para_folder, lg_pair+'.'+lgs[1]))     
 
-#Get language from filename
 def get_lang(filename) :
+    '''
+    To get language from filename
+    '''
     if len(filename)>=8 and bool(re.match(r'..-..\...',filename[-8:])) :
         return filename[-2]+filename[-1]
     if len(filename)>=7 and bool(re.match(r'..\.mono', filename[-7:])) :
