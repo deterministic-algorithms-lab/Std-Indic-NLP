@@ -1,4 +1,5 @@
 import os
+import re
 
 def execute(command) :
     x = os.system(command)
@@ -16,9 +17,8 @@ def shuf_pll(lg_pair: str, para_folder) :
 
 #Get language from filename
 def get_lang(filename) :
-    if len(filename)>=8 and bool(re.match('..-..\...',filename[-8:])) :
+    if len(filename)>=8 and bool(re.match(r'..-..\...',filename[-8:])) :
         return filename[-2]+filename[-1]
-    elif len(filename)>=7 and bool(re.match('..\.mono', filename[-7:])) :
+    if len(filename)>=7 and bool(re.match(r'..\.mono', filename[-7:])) :
         return filename[-7]+filename[-6]
-    else :
-        raise ValueError('Filename '+filename+' should end with a string of form \'lg.mono\' or \'lg-lg.lg\' to be processed.')
+    raise ValueError('Filename '+filename+' should end with a string of form \'lg.mono\' or \'lg-lg.lg\' to be processed.')
