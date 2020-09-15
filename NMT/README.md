@@ -33,5 +33,5 @@ Repo to play Around : https://github.com/jerinphilip/ilmulti
 
 **Example Command** : 
 ```
-python3 Std-Indic-NLP/NMT/datasets/pib_v0.2 --data_path data_dir/ --delete_old --exists
+python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --exists
 ```
