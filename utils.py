@@ -58,17 +58,17 @@ def extract_file(filepath, dir=None):
     if dir is None :
         dir = os.path.split(filepath)[0]
 
-    if filepath.endswith("tar.gz"):
+    if filepath.endswith("tar.gz") or filepath.endswith("tgz"):
         tar = tarfile.open(filepath, "r:gz")
-        tar.extractall()
+        tar.extractall(dir)
         tar.close()
     elif filepath.endswith("tar"):
         tar = tarfile.open(filepath, "r:")
-        tar.extractall()
+        tar.extractall(dir)
         tar.close()
     elif filepath.endswith('.zip')
         zip = zipfile.ZipFile(filepath, 'r')
-        zip.extractall()
+        zip.extractall(dir)
         zip.close()
 
 #Adapted from https://superuser.com/questions/127786/efficiently-remove-the-last-two-lines-of-an-extremely-large-text-file
@@ -101,3 +101,13 @@ def append_file(src_file, tgt_file):
     #cat is written in C , so faster. Will automatically create tgt_file, if it doesn't exist.
     command = 'cat '+src_file+' >> '+tgt_file
     execute(command)
+
+def join_files(directory, final_file, delete_old: bool=False):
+    """
+    Joins together all files directly under directory/ into a single file given by final_file
+    """
+    for f in os.listdir(directory):
+        if os.path.isfile(f):
+            append_file(os.path.join(directory, f), final_file)
+            if delete_old:
+                os.remove(os.path.join(directory, f))

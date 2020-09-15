@@ -1,8 +1,15 @@
 import os
 from typing import List
 from ..utils import append_file, get_all_files
+import re
 
-
+def get_sorted_pair(lg_pair: str) -> str:
+    """
+    Takes in a string of form ".*(lg1-lg2).*" and returns a string of same form,
+    with lg1 and lg2 sorted according to alphabetical order.
+    """
+    return re.sub('..-..', lambda st: '-'.join(sorted(st.split('-'))), lg_pair)
+ 
 def get_all_data(directory) -> List[str]:
     """
     Returns a list of all datai/ folders inside directory.
@@ -99,3 +106,20 @@ def joiner(
             append_file(src_file, tgt_file)
             if delete_old:
                 os.remove(src_file)
+
+def split_single_pll(filepath, lg1, lg2, target_dir=None, delimiter: str='\t') -> None:
+    """
+    Splits a single file having parallel data, into two files.
+    
+    :param lg1: Language of left column
+    :param lg2: Language of right column
+    """
+    if target_dir is None :
+        target_dir = os.path.split(filepath)[0]
+    lg_first = min(lg1, lg2)
+    lg_second = max(lg1, lg2)
+    pair = lg_first+'-'+lg2_second+'.'
+    command = 'cut -f1 -d'+delimiter+' '+filepath+' > '+ os.path.join(target_dir, pair+lg1)
+    execute(command)
+    command = 'cut -f2 -d'+delimiter+' '+filepath+' > '+ os.path.join(target_dir, pair+lg2)
+    execute(command)

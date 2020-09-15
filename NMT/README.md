@@ -35,3 +35,33 @@ Repo to play Around : https://github.com/jerinphilip/ilmulti
 ```
 python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --exists
 ```
+
+## PM-India Dataset
+
+Data Hosted at : http://data.statmt.org/pmindia/
+
+Link to Paper : https://arxiv.org/abs/2001.09907
+
+Crawler for making dataset : https://github.com/bhaddow/pmindia-crawler
+
+## UFAL en-ta Dataset
+
+Description Website : http://ufal.mff.cuni.cz/~ramasamy/parallel/html/
+
+Download Link : http://ufal.mff.cuni.cz/~ramasamy/parallel/data/v2/en-ta-parallel-v2.tar.gz
+
+## NLPC en-ta Dataset
+
+Description Repo : https://github.com/nlpcuom/English-Tamil-Parallel-Corpus
+
+## Tsardia en-gu Dataset
+
+Description Repo : https://github.com/shahparth123/eng_guj_parallel_corpus
+
+## ALT Parallel Corpus for bn-en & en-hi
+
+Asian Language Treebank : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/
+
+Description Website : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206/README.txt
+
+Download Link : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206.zip
