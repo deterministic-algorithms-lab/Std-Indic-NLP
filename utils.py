@@ -79,18 +79,17 @@ def remove_trailing_newline(file) :
     count=0
     with open(file,'r+b', buffering=0) as f:
         f.seek(0, os.SEEK_END)
-        end = f.tell()
         while f.tell() > 0:
             f.seek(-1, os.SEEK_CUR)
             char = f.read(1)
             
             if char != b'\n':
                 break
-            else:
-                count += 1
-                f.seek(-1, os.SEEK_CUR)
-                #Truncate all content in the file following and including the current location of file pointer.
-                f.truncate() 
+            
+            count += 1
+            f.seek(-1, os.SEEK_CUR)
+            #Truncate all content in the file following and including the current location of file pointer.
+            f.truncate() 
     print ("Removed " + str(count) + " lines from end of file.")
 
 def append_file(src_file, tgt_file):
