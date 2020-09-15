@@ -19,8 +19,6 @@ if __name__=='__main__' :
     #Download dataset
     urllib.request.urlretrieve("web_link", args.data_path)
 
-    execute(download_command)
-
     #Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
 
     #Transform the cleaned dataset to the standard format, in data_path/data1/  
