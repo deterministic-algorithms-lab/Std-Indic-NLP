@@ -1,5 +1,4 @@
 import argparse
-from ..utils import execute
 from utils import joiner
 import urllib.request
 

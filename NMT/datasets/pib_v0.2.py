@@ -1,5 +1,5 @@
 import argparse
-from ...utils import execute, extract_file
+from ...utils import extract_file
 from ..utils import joiner, next_datai
 import urllib.request
 import os, shutil

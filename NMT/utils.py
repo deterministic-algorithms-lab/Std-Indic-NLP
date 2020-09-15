@@ -14,7 +14,8 @@ def get_all_data(directory) -> List[str]:
 
 def make_std_fs(path):
     """
-    Makes file structure for standard dataset, in the path directory; if it doesn't already exist.
+    Makes file structure for standard dataset, in the path directory;
+    if it doesn't already exist.
     """
     assert os.path.split(path)[1].startswith('data'), '\"path\" must correspond to \"data/\" folder of standard file structure'
 
