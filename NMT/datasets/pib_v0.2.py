@@ -27,10 +27,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.exists:
-        std_data = args.data_path
-        args.data_path = os.path.join(args.data_path, "..")
-
     # Download dataset
     urllib.request.urlretrieve(
         "http://preon.iiit.ac.in/~jerin/resources/datasets/pib_v0.2.tar.gz",

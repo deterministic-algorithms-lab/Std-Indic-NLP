@@ -13,7 +13,7 @@ def get_all_data(directory) -> List[str]:
         if os.path.isdir(os.path.join(directory, f))
         and (f.startswith("data") and len(f) != 4 and f[4:].isnumeric())
     ]
-    data_dirs.sort()
+    data_dirs.sort(key=int(f[4:]))
     return [os.path.join(directory, f) for f in data_dirs]
 
 
