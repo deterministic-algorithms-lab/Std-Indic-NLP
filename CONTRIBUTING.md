@@ -6,6 +6,8 @@ To add a new task, create a new folder for that task, directly under ```Std-Indi
 
 2.) Must also have a ```CONTRIBUTING.md``` & ```template.py``` detailing how other dataset can be added.
 
+3.) A script for combining multiple datasets must be added eventually.
+
 ## Cleaning & Utilities
 
 1.) Add task specific utilities and cleaning processes in their respective ```cleaners.py``` and ```utils.py``` files.
