@@ -9,6 +9,6 @@ If the ```--delete_old``` flag is provided, only one copy of data must be there.
 
 Also, add a section corresponding to your dataset in the ```README.md``` file of the ```NMT/``` folder. The section must have the link to dataset and/or its description. And also include example commands, if you decided to include arguments other than those given in the **Template** below.
 
-## Template :
+## Template 
 
 See ```template.py```.
