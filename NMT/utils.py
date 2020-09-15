@@ -44,8 +44,19 @@ def next_available(directory, append: bool=False):
             return path
         i=i+1
 
+def next_datai(directory) -> (int,str):
+    """
+    Returns next available 'datai/' folder store data into.
+    """
+    i=0
+    while True :
+        data_dir = os.path.join(directory, 'data'+str(i))
+        if not os.path.isdir(data_dir) :
+            make_std_fs(data_dir)
+            return i,data_dir
+        i=i+1
 
-def joiner(directory, std_folders_lis: List[str]=None, delete_old: bool=False) -> None:
+def joiner(directory, delete_old: bool=False, std_folders_lis: List[str]=None) -> None:
     """
     Joins all data in datai/ or data/ standard dataset folders in the directory and stores in data/ folder.
     If std_folders_lis is provided, the folders in std_folders_lis are joined and put in directory/data/ or in directory/data-join-i/ .
@@ -62,7 +73,7 @@ def joiner(directory, std_folders_lis: List[str]=None, delete_old: bool=False) -
     
     for src_path in std_folders_lis :
         
-        src_file_paths, src_file_names = get_all_files(os.path.join(src_path, 'mono'))+get_all_files(os.path.join(src_path, 'para'))
+        src_file_paths = get_all_files(os.path.join(src_path, 'mono'))[0]+get_all_files(os.path.join(src_path, 'para'))[0]
         
         for src_file in src_file_paths :
             
