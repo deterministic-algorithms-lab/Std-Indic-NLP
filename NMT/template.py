@@ -1,6 +1,7 @@
 import argparse
 from ..utils import execute
 from utils import joiner
+import urllib.request
 
 if __name__=='__main__' :
     parser = argparse.ArgumentParser()
@@ -16,7 +17,8 @@ if __name__=='__main__' :
     args = parser.parse_args()
 
     #Download dataset
-    download_command = 'wget '+'link-to-download'+' -P '+args.data_path
+    urllib.request.urlretrieve("web_link", args.data_path)
+
     execute(download_command)
 
     #Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
