@@ -1,6 +1,6 @@
 import os
 from typing import List
-from ..utils import append_file, get_all_files
+from ..utils import append_file, get_all_files, execute
 import re
 
 def get_sorted_pair(lg_pair: str) -> str:
@@ -118,7 +118,7 @@ def split_single_pll(filepath, lg1, lg2, target_dir=None, delimiter: str='\t') -
         target_dir = os.path.split(filepath)[0]
     lg_first = min(lg1, lg2)
     lg_second = max(lg1, lg2)
-    pair = lg_first+'-'+lg2_second+'.'
+    pair = lg_first+'-'+lg_second+'.'
     command = 'cut -f1 -d'+delimiter+' '+filepath+' > '+ os.path.join(target_dir, pair+lg1)
     execute(command)
     command = 'cut -f2 -d'+delimiter+' '+filepath+' > '+ os.path.join(target_dir, pair+lg2)
