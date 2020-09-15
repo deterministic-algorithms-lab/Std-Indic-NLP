@@ -10,6 +10,13 @@ def execute(command):
     if x >> 8 != 0:
         exit(1)
 
+def get_all_files(directory):
+    """
+    Returns lists of paths and names all files in directory
+    """
+    names = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+    paths = [os.path.join(directory,f) for f in names]
+    return paths, names    
 
 def shuf_mono(filename):
     """

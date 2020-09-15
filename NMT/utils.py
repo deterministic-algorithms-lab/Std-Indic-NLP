@@ -1,6 +1,6 @@
 import os
 from typing import List
-from ..utils import append_file
+from ..utils import append_file, get_all_files
 
 def get_all_data(directory) -> List[str]:
     """
@@ -11,13 +11,6 @@ def get_all_data(directory) -> List[str]:
     data_dirs.sort()
     return [os.path.join(directory, f) for f in data_dirs]
 
-def get_all_files(directory):
-    """
-    Returns lists of paths and names all files in directory
-    """
-    names = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
-    paths = [os.path.join(directory,f) for f in names]
-    return paths, names    
 
 def make_std_fs(path):
     """
@@ -76,4 +69,6 @@ def joiner(directory, std_folders_lis: List[str]=None, delete_old: bool=False) -
             base, filename = os.path.split(src_file)
             base, mono_para = os.path.split(base)
             tgt_file = os.path.join(tgt_dir, mono_para, filename)
-            append_file(src_file, tgt_file)    
+            append_file(src_file, tgt_file)
+            if delete_old :
+                os.remove(src_file)
