@@ -76,14 +76,14 @@ def extract_file(filepath, dir=None) -> List[str]:
         tar.close()
         return extracted_files
     
-    elif filepath.endswith('.zip')
+    elif filepath.endswith('.zip'):
         zip = zipfile.ZipFile(filepath, 'r')
         zip.extractall(dir)
         extracted_files = [os.path.join(dir, elem) for elem in zip.namelist() if os.path.isfile(os.path.join(dir, elem))]
         zip.close()
         return extracted_files
     
-    elif filepath.endswith('.gz')
+    elif filepath.endswith('.gz'):
         gz = gzip.open(filepath)
         store_at = os.path.join(dir, filename[:-3])
         with open(store_at, 'wb') as f :

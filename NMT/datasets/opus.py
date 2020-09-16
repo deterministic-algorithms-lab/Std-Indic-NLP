@@ -1,7 +1,6 @@
 import argparse
 from ...utils import extract_file, append_file
-from ..utils import joiner, next_datai, get_sorted_pair
-import urllib.request
+from ..utils import next_datai
 import os
 import opustools
 
@@ -72,9 +71,9 @@ if __name__ == "__main__":
     #Monolingual Part
     for lg in mono:
         lg_files = []
-        for dir in corpora:
+        for directory in corpora:
             #Downloading
-            mono_downloader = opustools.OpusGet(source=lg, preprocess='mono', directory=dir, download_dir=args.data_path, suppress_prompts=True)
+            mono_downloader = opustools.OpusGet(source=lg, preprocess='mono', directory=directory, download_dir=args.data_path, suppress_prompts=True)
             corpora, file_n, total_size = mono_downloader.get_corpora_data()
             mono_downloader.download(corpora, file_n, total_size)
             downloaded_filenames = [mono_downloader.make_file_name(c) for c in corpora]
@@ -92,13 +91,13 @@ if __name__ == "__main__":
         f_lang, s_lang = lg_pair.split('-')
         all_files = []
 
-        for dir in corpora:
+        for directory in corpora:
             
             #Downloading 
-            pll_downloader = opustools.OpusGet(source=f_lang, target=s_lang, preprocess='moses', directory=dir, download_dir=args.data_path, suppress_prompts=True)
+            pll_downloader = opustools.OpusGet(source=f_lang, target=s_lang, preprocess='moses', directory=directory, download_dir=args.data_path, suppress_prompts=True)
             data = pll_downloader.get_response(pll_downloader.url)
-            c_size = og.format_size(sum([elem['size'] for elem in data['corpora']]))
-            og.download(data['corpora'], len(data['corpora']), c_size)
+            c_size = pll_downloader.format_size(sum([elem['size'] for elem in data['corpora']]))
+            pll_downloader.download(data['corpora'], len(data['corpora']), c_size)
             downloaded_filenames = [pll_downloader.make_file_name(c) for c in corpora]
             
             #Extracting Files
@@ -107,13 +106,14 @@ if __name__ == "__main__":
         
         #Joining together files 
         prefix = min(f_lang, s_lang)+'-'+max(f_lang, s_lang)
-        if filepath.endswith(prefix+'.'+f_lang):
-            append_file(filepath, os.path.join(final_data_path, 'para', lg_pair+'.'+f_lang))
-        elif filepath.endswith(prefix+'.'+s_lang):
-            append_file(filepath, os.path.join(final_data_path, 'para', lg_pair+'.'+s_lang))
-        elif args.delete_metadata:
-            os.remove(filepath)
-    
+        for filepath in all_files:
+            if filepath.endswith(prefix+'.'+f_lang):
+                append_file(filepath, os.path.join(final_data_path, 'para', lg_pair+'.'+f_lang))
+            elif filepath.endswith(prefix+'.'+s_lang):
+                append_file(filepath, os.path.join(final_data_path, 'para', lg_pair+'.'+s_lang))
+            elif args.delete_metadata:
+                os.remove(filepath)
+        
     if args.merge:
         #Join datasets
         joiner(args.data_path, args.delete_old)
