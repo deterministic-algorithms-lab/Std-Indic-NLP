@@ -29,11 +29,11 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/shahparth123/eng_guj_parallel_corpus/master/train.en",
-        args.data_path,
+        os.path.join(args.data_path, 'train.en')
     )
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/shahparth123/eng_guj_parallel_corpus/master/train.gu",
-        args.data_path,
+        os.path.join(args.data_path, 'train.gu')
     )
 
     # Transform the cleaned dataset to the standard format, in data_path/datai/
