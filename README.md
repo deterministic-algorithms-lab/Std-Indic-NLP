@@ -12,4 +12,6 @@ The purpose of this repository is to provide scripts for downloading various Ind
 
 3.) Look through the ```README.md``` and ```CONTRIBUTING.md``` above and inside the folder corresponding to the NLP task, to understand usage/contribute.
 
-4.) See [Projects](https://github.com/deterministic-algorithms-lab/Std-Indic-NLP/projects) if you want to contribute to already planned tasks.
+4.) See [Projects](https://github.com/deterministic-algorithms-lab/Std-Indic-NLP/projects) if you want to contribute to already planned tasks. 
+
+5.) Kindly open a new issue whenever you want to add a new dataset/cleaner/task and discuss changes, and search through pull-requests to make sure that no one else is working on the same thing already.
