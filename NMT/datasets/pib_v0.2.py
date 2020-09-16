@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "http://preon.iiit.ac.in/~jerin/resources/datasets/pib_v0.2.tar.gz",
-        os.path.join(args.data_path, 'pib_v0.2.tar.gz') ,
+        os.path.join(args.data_path, "pib_v0.2.tar.gz"),
     )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
