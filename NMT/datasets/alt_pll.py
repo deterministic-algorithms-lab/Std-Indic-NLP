@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206.zip",
-        os.path.join(args.data_path, 'ALT-Parallel-Corpus-20191206.zip')
+        os.path.join(args.data_path, "ALT-Parallel-Corpus-20191206.zip"),
     )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
@@ -42,17 +42,17 @@ if __name__ == "__main__":
     bn_path = os.path.join(args.data_path, alt_path, "data_bg.txt")
     hi_path = os.path.join(args.data_path, alt_path, "data_hi.txt")
     final_data_path = next_datai(args.data_path)
-    
-    shutil.copyfile(en_path, os.path.join(final_data_path, 'para', 'bn-en.en'))
+
+    shutil.copyfile(en_path, os.path.join(final_data_path, "para", "bn-en.en"))
     if args.delete_old:
-        os.rename(en_path, os.path.join(final_data_path, 'para', 'en-hi.en'))
-        os.rename(hi_path, os.path.join(final_data_path, 'para', 'en-hi.hi'))
-        os.rename(bn_path, os.path.join(final_data_path, 'para', 'bn-en.bn'))    
+        os.rename(en_path, os.path.join(final_data_path, "para", "en-hi.en"))
+        os.rename(hi_path, os.path.join(final_data_path, "para", "en-hi.hi"))
+        os.rename(bn_path, os.path.join(final_data_path, "para", "bn-en.bn"))
     else:
-        shutil.copyfile(en_path, os.path.join(final_data_path, 'para', 'en-hi.en'))
-        shutil.copyfile(hi_path, os.path.join(final_data_path, 'para', 'en-hi.hi'))
-        shutil.copyfile(bn_path, os.path.join(final_data_path, 'para', 'bn-en.bn'))    
-    
+        shutil.copyfile(en_path, os.path.join(final_data_path, "para", "en-hi.en"))
+        shutil.copyfile(hi_path, os.path.join(final_data_path, "para", "en-hi.hi"))
+        shutil.copyfile(bn_path, os.path.join(final_data_path, "para", "bn-en.bn"))
+
     if args.merge:
         # Join datasets
         joiner(args.data_path, args.delete_old)
