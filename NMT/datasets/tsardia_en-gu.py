@@ -29,25 +29,25 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/shahparth123/eng_guj_parallel_corpus/master/train.en",
-        os.path.join(args.data_path, 'train.en')
+        os.path.join(args.data_path, "train.en"),
     )
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/shahparth123/eng_guj_parallel_corpus/master/train.gu",
-        os.path.join(args.data_path, 'train.gu')
+        os.path.join(args.data_path, "train.gu"),
     )
 
     # Transform the cleaned dataset to the standard format, in data_path/datai/
     en_path = os.path.join(args.data_path, "train.en")
     gu_path = os.path.join(args.data_path, "train.gu")
     final_data_path = next_datai(args.data_path)
-    
+
     if args.delete_old:
-        os.rename(en_path, os.path.join(final_data_path, 'para', 'en-gu.en'))
-        os.rename(gu_path, os.path.join(final_data_path, 'para', 'en-gu.gu'))    
+        os.rename(en_path, os.path.join(final_data_path, "para", "en-gu.en"))
+        os.rename(gu_path, os.path.join(final_data_path, "para", "en-gu.gu"))
     else:
-        shutil.copyfile(en_path, os.path.join(final_data_path, 'para', 'en-gu.en'))
-        shutil.copyfile(gu_path, os.path.join(final_data_path, 'para', 'en-gu.gu'))    
-    
+        shutil.copyfile(en_path, os.path.join(final_data_path, "para", "en-gu.en"))
+        shutil.copyfile(gu_path, os.path.join(final_data_path, "para", "en-gu.gu"))
+
     if args.merge:
         # Join datasets
         joiner(args.data_path, args.delete_old)
