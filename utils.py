@@ -50,33 +50,46 @@ def get_lang(filename):
     )
 
 
-def extract_file(filepath, dir=None):
+def extract_file(filepath, dir=None) -> List[str]:
     """
     Extracts the file at 'filepath' to the directory passed in 'dir';
     Can only extract .tar.gz ; .tar; .gz and .zip files
+    Returns List to paths to all files in final extracted file.
     """
     if dir is None :
         dir, filename = os.path.split(filepath)
+    
+    if not os.path.isdir(dir):
+        os.makedirs(dir)
 
-    if filepath.endswith("tar.gz") or filepath.endswith("tgz"):
+    if filepath.endswith(".tar.gz") or filepath.endswith(".tgz"):
         tar = tarfile.open(filepath, "r:gz")
         tar.extractall(dir)
+        extracted_files = [os.path.join(dir, elem) for elem in tar.getnames() if os.path.isfile(os.path.join(dir, elem))]
         tar.close()
+        return extracted_files
+    
     elif filepath.endswith(".tar"):
-        tar = tarfile.open(filepath, "r:")
+        tar = tarfile.open(filepath, "r")
         tar.extractall(dir)
+        extracted_files = [os.path.join(dir, elem) for elem in tar.getnames() if os.path.isfile(os.path.join(dir, elem))]
         tar.close()
+        return extracted_files
+    
     elif filepath.endswith('.zip')
         zip = zipfile.ZipFile(filepath, 'r')
         zip.extractall(dir)
+        extracted_files = [os.path.join(dir, elem) for elem in zip.namelist() if os.path.isfile(os.path.join(dir, elem))]
         zip.close()
+        return extracted_files
+    
     elif filepath.endswith('.gz')
         gz = gzip.open(filepath)
         store_at = os.path.join(dir, filename[:-3])
         with open(store_at, 'wb') as f :
             shutil.copyfileobj(gz, f)
         gz.close()
-    
+        return [os.path.join(dir, filename[:-3])]
 
 #Adapted from https://superuser.com/questions/127786/efficiently-remove-the-last-two-lines-of-an-extremely-large-text-file
 def remove_trailing_newline(file) :

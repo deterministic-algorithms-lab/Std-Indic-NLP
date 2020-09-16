@@ -75,6 +75,23 @@ Repo for Downloading & Scripts for LMs and Embeddings : https://github.com/AI4Bh
 **Example Command** :
 
 ```
-python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --merge --langs pa-hi-bn
+python3 Std-Indic-NLP/NMT/datasets/indic_nlp.py --data_path data_dir/ --delete_old --merge --langs pa-hi-bn
 ```
 The langs to be downloaded can be satisfied via the ```--langs``` argument. By default, all languages will be downloaded.
+
+## OPUS
+
+Website : http://opus.nlpl.eu/
+
+Repo for Getting Data : https://github.com/Helsinki-NLP/OpusTools
+
+Paper for Repo : http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.467.pdf
+
+Example Command :
+
+```
+python3 Std-Indic-NLP/NMT/datasets/opus.py --data_path data_dir/ --delete_old --merge --mono_langs hi,en,ta --pll_langs en-hi,en-ta \
+                                           --corpora Ubuntu-v14.10 --delete_metadata
+```
+
+If ```--corpora``` isn't provided, all corpus on OPUS are searched through.
