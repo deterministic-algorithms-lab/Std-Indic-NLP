@@ -1,6 +1,6 @@
-import os
+import os, shutil
 import re
-import tarfile, zipfile
+import tarfile, zipfile, gzip
 
 def execute(command):
     """
@@ -53,16 +53,16 @@ def get_lang(filename):
 def extract_file(filepath, dir=None):
     """
     Extracts the file at 'filepath' to the directory passed in 'dir';
-    Can only extract .tar.gz ; .gz and .zip files
+    Can only extract .tar.gz ; .tar; .gz and .zip files
     """
     if dir is None :
-        dir = os.path.split(filepath)[0]
+        dir, filename = os.path.split(filepath)
 
     if filepath.endswith("tar.gz") or filepath.endswith("tgz"):
         tar = tarfile.open(filepath, "r:gz")
         tar.extractall(dir)
         tar.close()
-    elif filepath.endswith("tar"):
+    elif filepath.endswith(".tar"):
         tar = tarfile.open(filepath, "r:")
         tar.extractall(dir)
         tar.close()
@@ -70,6 +70,13 @@ def extract_file(filepath, dir=None):
         zip = zipfile.ZipFile(filepath, 'r')
         zip.extractall(dir)
         zip.close()
+    elif filepath.endswith('.gz')
+        gz = gzip.open(filepath)
+        store_at = os.path.join(dir, filename[:-3])
+        with open(store_at, 'wb') as f :
+            shutil.copyfileobj(gz, f)
+        gz.close()
+    
 
 #Adapted from https://superuser.com/questions/127786/efficiently-remove-the-last-two-lines-of-an-extremely-large-text-file
 def remove_trailing_newline(file) :

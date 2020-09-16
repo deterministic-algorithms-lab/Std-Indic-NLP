@@ -14,9 +14,9 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--exists",
+        "--merge",
         action="store_true",
-        help="If this flag isn't provided, new independent standard directory will be made for this dataset.",
+        help="If this flag isn't provided, new independent standard directory will be made for this dataset and it won't be joined within data/ folders in the data_path..",
     )
 
     parser.add_argument(
@@ -51,6 +51,6 @@ if __name__ == "__main__":
             else:
                 shutil.copyfile(filepath, new_filepath)
 
-    if args.exists:
+    if args.merge:
         # Join datasets
         joiner(args.data_path, args.delete_old)

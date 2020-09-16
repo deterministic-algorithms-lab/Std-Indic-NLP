@@ -33,7 +33,7 @@ Repo to play Around : https://github.com/jerinphilip/ilmulti
 
 **Example Command** : 
 ```
-python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --exists
+python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --merge
 ```
 
 ## PM-India Dataset
@@ -65,3 +65,16 @@ Asian Language Treebank : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/
 Description Website : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206/README.txt
 
 Download Link : http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206.zip
+
+## AI-4Bharat Indic-NLP Corpus 
+
+Description Paper : https://arxiv.org/abs/2005.00085
+
+Repo for Downloading & Scripts for LMs and Embeddings : https://github.com/AI4Bharat/indicnlp_corpus
+
+**Example Command** :
+
+```
+python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --merge --langs pa-hi-bn
+```
+The langs to be downloaded can be satisfied via the ```--langs``` argument. By default, all languages will be downloaded.
