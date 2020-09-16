@@ -1,7 +1,7 @@
 ---
 name: Add Dataset
 about: Requesting to add the following Dataset
-title: ''
+title: "[New Dataset]"
 labels: add dataset
 assignees: Jeevesh8
 
