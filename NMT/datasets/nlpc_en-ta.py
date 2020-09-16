@@ -29,11 +29,11 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/nlpcuom/English-Tamil-Parallel-Corpus/master/En-Ta%20Corpus/En-Ta%20Tamil.txt",
-        args.data_path,
+        os.path.join(args.data_path, 'En-Ta Tamil.txt'),
     )
     urllib.request.urlretrieve(
         "https://raw.githubusercontent.com/nlpcuom/English-Tamil-Parallel-Corpus/master/En-Ta%20Corpus/En-Ta%20English.txt",
-        args.data_path,
+        os.path.join(args.data_path,'En-Ta English.txt'),
     )
 
     # Transform the cleaned dataset to the standard format, in data_path/datai/

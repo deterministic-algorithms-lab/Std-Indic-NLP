@@ -41,7 +41,7 @@ if __name__ == "__main__":
         
         urllib.request.urlretrieve(
             "https://storage.googleapis.com/ai4bharat-public-indic-nlp-corpora/data/monolingual/indicnlp_v1/sentence/"+lg+".txt.gz",
-             args.data_path
+             os.path.join(args.data_path, lg+'.txt.gz')
         )
         
         #Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.

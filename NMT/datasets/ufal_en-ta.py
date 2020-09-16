@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "http://ufal.mff.cuni.cz/~ramasamy/parallel/data/v2/en-ta-parallel-v2.tar.gz",
-        args.data_path,
+        os.path.join(args.data_path,'en-ta-parallel-v2.tar.gz')
     )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.

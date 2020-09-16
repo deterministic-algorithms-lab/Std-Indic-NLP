@@ -37,7 +37,7 @@ if __name__ == "__main__":
         
         urllib.request.urlretrieve(
             "http://data.statmt.org/pmindia/v1/monolingual/pmindia.v1."+lg+".tgz",
-             args.data_path
+             os.path.join(args.data_path,"pmindia.v1."+lg+".tgz") 
         )
         
         #Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         
         urllib.request.urlretrieve(
             "http://data.statmt.org/pmindia/v1/parallel/pmindia.v1."+pair+".tsv",
-            args.data_path
+            os.path.join(args.data_path, "pmindia.v1."+pair+".tsv")
         )
 
         #Transform the cleaned dataset to the standard format, in data_path/datai/

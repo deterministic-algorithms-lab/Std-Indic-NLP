@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # Download dataset
     urllib.request.urlretrieve(
         "http://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/ALT-Parallel-Corpus-20191206.zip",
-        args.data_path,
+        os.path.join(args.data_path, 'ALT-Parallel-Corpus-20191206.zip')
     )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
