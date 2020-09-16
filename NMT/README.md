@@ -87,7 +87,7 @@ Repo for Getting Data : https://github.com/Helsinki-NLP/OpusTools
 
 Paper for Repo : http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.467.pdf
 
-Example Command :
+**Example Command** :
 
 ```
 python3 Std-Indic-NLP/NMT/datasets/opus.py --data_path data_dir/ --delete_old --merge --mono_langs hi,en,ta --pll_langs en-hi,en-ta \
