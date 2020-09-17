@@ -32,10 +32,10 @@ if __name__ == "__main__":
         "http://preon.iiit.ac.in/~jerin/resources/datasets/pib_v0.2.tar.gz",
         os.path.join(args.data_path, "pib_v0.2.tar.gz"),
     )
-    
+
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
     extract_file(os.path.join(args.data_path, "pib_v0.2.tar.gz"))
-    
+
     # Transform the cleaned dataset to the standard format, in data_path/datai/
     data_path = os.path.join(args.data_path, "pib-v0.2")
     final_data_path = next_datai(args.data_path)[1]
@@ -47,11 +47,11 @@ if __name__ == "__main__":
                 final_data_path, "para", root.split("/")[-1] + "." + f.split(".")[-1]
             )
             if args.delete_old:
-                print("Moving : ",filepath, " to ", new_filepath)
+                print("Moving : ", filepath, " to ", new_filepath)
                 os.rename(filepath, new_filepath)
             else:
                 shutil.copyfile(filepath, new_filepath)
-    
+
     if args.merge:
         # Join datasets
         joiner(args.data_path, args.delete_old)

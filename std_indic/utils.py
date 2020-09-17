@@ -3,6 +3,7 @@ import re
 import tarfile, zipfile, gzip
 from typing import List
 
+
 def execute(command):
     """
     Executes the command, exits, and doesn't execute any further command, if the current one fails
