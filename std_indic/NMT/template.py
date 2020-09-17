@@ -29,7 +29,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Download dataset
-    urllib.request.urlretrieve("web_link", os.path.join(args.data_path, "name of file-to-extract"))
+    urllib.request.urlretrieve(
+        "web_link", os.path.join(args.data_path, "name of file-to-extract")
+    )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
 

@@ -51,10 +51,16 @@ if __name__ == "__main__":
             os.path.join(args.data_path, lg + ".txt.gz"),
             os.path.join(final_data_path, "mono"),
         )
-        
-        #Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
-        extract_file(os.path.join(args.data_path, lg+".txt.gz"), os.path.join(final_data_path, 'mono'))
-        os.rename(os.path.join(final_data_path, 'mono', lg+".txt"), os.path.join(final_data_path, 'mono', lg+".mono"))
+
+        # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
+        extract_file(
+            os.path.join(args.data_path, lg + ".txt.gz"),
+            os.path.join(final_data_path, "mono"),
+        )
+        os.rename(
+            os.path.join(final_data_path, "mono", lg + ".txt"),
+            os.path.join(final_data_path, "mono", lg + ".mono"),
+        )
 
     if args.merge:
         # Join datasets
