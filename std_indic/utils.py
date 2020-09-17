@@ -78,7 +78,7 @@ def extract_file(filepath, dir=None) -> List[str]:
         tar.close()
         return extracted_files
 
-    elif filepath.endswith(".tar"):
+    if filepath.endswith(".tar"):
         tar = tarfile.open(filepath, "r")
         tar.extractall(dir)
         extracted_files = [
@@ -89,7 +89,7 @@ def extract_file(filepath, dir=None) -> List[str]:
         tar.close()
         return extracted_files
 
-    elif filepath.endswith(".zip"):
+    if filepath.endswith(".zip"):
         zip = zipfile.ZipFile(filepath, "r")
         zip.extractall(dir)
         extracted_files = [
@@ -100,7 +100,7 @@ def extract_file(filepath, dir=None) -> List[str]:
         zip.close()
         return extracted_files
 
-    elif filepath.endswith(".gz"):
+    if filepath.endswith(".gz"):
         gz = gzip.open(filepath)
         store_at = os.path.join(dir, filename[:-3])
         with open(store_at, "wb") as f:
