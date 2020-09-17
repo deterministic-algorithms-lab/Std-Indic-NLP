@@ -1,6 +1,6 @@
 import argparse
-from ...utils import extract_file
-from ..utils import joiner, next_datai
+from std_indic.utils import extract_file
+from std_indic.NMT.utils import joiner, next_datai
 import urllib.request
 import os, shutil
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     en_path = os.path.join(args.data_path, alt_path, "data_en.txt")
     bn_path = os.path.join(args.data_path, alt_path, "data_bg.txt")
     hi_path = os.path.join(args.data_path, alt_path, "data_hi.txt")
-    final_data_path = next_datai(args.data_path)
+    final_data_path = next_datai(args.data_path)[1]
 
     shutil.copyfile(en_path, os.path.join(final_data_path, "para", "bn-en.en"))
     if args.delete_old:

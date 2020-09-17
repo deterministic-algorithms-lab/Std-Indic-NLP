@@ -1,7 +1,7 @@
 import os, shutil
 import re
 import tarfile, zipfile, gzip
-
+from typing import List
 
 def execute(command):
     """
@@ -14,7 +14,7 @@ def execute(command):
 
 def get_all_files(directory):
     """
-    Returns lists of paths and names all files in directory
+    Returns lists of paths and names of all files in directory
     """
     names = [
         f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))
@@ -135,8 +135,10 @@ def append_file(src_file, tgt_file):
     """
     Appends src_file to tgt_file's end.
     """
-    remove_trailing_newline(src_file)
-    remove_trailing_newline(tgt_file)
+    if os.path.isfile(src_file):
+        remove_trailing_newline(src_file)
+    if os.path.isfile(tgt_file):
+        remove_trailing_newline(tgt_file)
     # cat is written in C , so faster. Will automatically create tgt_file, if it doesn't exist.
     command = "cat " + src_file + " >> " + tgt_file
     execute(command)

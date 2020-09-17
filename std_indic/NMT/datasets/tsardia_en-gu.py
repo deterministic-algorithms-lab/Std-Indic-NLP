@@ -1,5 +1,5 @@
 import argparse
-from ..utils import joiner, next_datai
+from std_indic.NMT.utils import joiner, next_datai
 import urllib.request
 import os, shutil
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # Transform the cleaned dataset to the standard format, in data_path/datai/
     en_path = os.path.join(args.data_path, "train.en")
     gu_path = os.path.join(args.data_path, "train.gu")
-    final_data_path = next_datai(args.data_path)
+    final_data_path = next_datai(args.data_path)[1]
 
     if args.delete_old:
         os.rename(en_path, os.path.join(final_data_path, "para", "en-gu.en"))

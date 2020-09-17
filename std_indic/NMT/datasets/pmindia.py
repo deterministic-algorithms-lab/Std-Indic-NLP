@@ -1,6 +1,6 @@
 import argparse
-from ...utils import extract_file, join_files
-from ..utils import joiner, next_datai, split_single_pll
+from std_indic.utils import extract_file, join_files
+from std_indic.NMT.utils import joiner, next_datai, split_single_pll
 import urllib.request
 import os
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    final_data_path = next_datai(args.data_path)
+    final_data_path = next_datai(args.data_path)[1]
 
     lg_pairs = [
         "as-en",

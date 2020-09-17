@@ -1,6 +1,6 @@
 import os
 from typing import List
-from ..utils import append_file, get_all_files, execute
+from std_indic.utils import append_file, get_all_files, execute
 import re
 
 
@@ -20,7 +20,7 @@ def get_all_data(directory) -> List[str]:
         f
         for f in os.listdir(directory)
         if os.path.isdir(os.path.join(directory, f))
-        and (f.startswith("data") and len(f) != 4 and f[4:].isnumeric())
+        and (f.startswith("data") and len(f) > 4 and f[4:].isnumeric())
     ]
     data_dirs.sort(key=lambda f: int(f[4:]))
     return [os.path.join(directory, f) for f in data_dirs]
@@ -39,7 +39,7 @@ def make_std_fs(path):
         os.makedirs(path)
     mono_path = os.path.join(path, "mono")
     para_path = os.path.join(path, "para")
-    if not os.path.idir(mono_path):
+    if not os.path.isdir(mono_path):
         os.makedirs(mono_path)
     if not os.path.isdir(para_path):
         os.makedirs(para_path)
@@ -105,6 +105,7 @@ def joiner(
             base, filename = os.path.split(src_file)
             base, mono_para = os.path.split(base)
             tgt_file = os.path.join(tgt_dir, mono_para, filename)
+            print("Appending ", src_file, " to ", tgt_file)
             append_file(src_file, tgt_file)
             if delete_old:
                 os.remove(src_file)

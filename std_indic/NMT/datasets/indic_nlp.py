@@ -1,6 +1,6 @@
 import argparse
-from ...utils import extract_file
-from ..utils import joiner, next_datai
+from std_indic.utils import extract_file
+from std_indic.NMT.utils import joiner, next_datai
 import urllib.request
 import os
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    final_data_path = next_datai(args.data_path)
+    final_data_path = next_datai(args.data_path)[1]
 
     mono = args.langs.split("-")
 

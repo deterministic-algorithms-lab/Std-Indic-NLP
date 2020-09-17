@@ -1,8 +1,8 @@
 import argparse
-from ...utils import extract_file
-from ..utils import joiner, next_datai
+from std_indic.utils import extract_file, append_file
+from std_indic.NMT.utils import joiner, next_datai
 import urllib.request
-import os, shutil
+import os
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -29,27 +29,27 @@ if __name__ == "__main__":
 
     # Download dataset
     urllib.request.urlretrieve(
-        "http://preon.iiit.ac.in/~jerin/resources/datasets/pib_v0.2.tar.gz",
-        os.path.join(args.data_path, "pib_v0.2.tar.gz"),
+        "http://ufal.mff.cuni.cz/~ramasamy/parallel/data/v2/en-ta-parallel-v2.tar.gz",
+        os.path.join(args.data_path, "en-ta-parallel-v2.tar.gz"),
     )
 
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
-    extract_file(os.path.join(args.data_path, "pib_v0.2.tar.gz"))
+    extract_file(os.path.join(args.data_path, "en-ta-parallel-v2.tar.gz"))
 
     # Transform the cleaned dataset to the standard format, in data_path/datai/
-    data_path = os.path.join(args.data_path, "pib_v0.2")
-    final_data_path = next_datai(args.data_path)
+    data_path = os.path.join(args.data_path, "en-ta-parallel-v2")
+    final_data_path = next_datai(args.data_path)[1]
 
-    for root, dirs, files in os.walk(data_path):
-        for f in files:
-            filepath = os.path.join(root, f)
-            new_filepath = os.path.join(
-                final_data_path, "para", root.split("/")[-1] + "." + f.split(".")[-1]
-            )
-            if args.delete_old:
-                os.rename(filepath, new_filepath)
-            else:
-                shutil.copyfile(filepath, new_filepath)
+    for filename in sorted(os.listdir(data_path)):
+
+        filepath = os.path.join(data_path, filename)
+
+        if filename.endswith(".en"):
+            append_file(filepath, os.path.join(final_data_path, "para", "en-ta.en"))
+        if filename.endswith(".ta"):
+            append_file(filepath, os.path.join(final_data_path, "para", "en-ta.ta"))
+        if args.delete_old:
+            os.remove(filepath)
 
     if args.merge:
         # Join datasets

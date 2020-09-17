@@ -1,6 +1,6 @@
 import argparse
-from ...utils import extract_file, append_file
-from ..utils import next_datai
+from std_indic.utils import extract_file, append_file
+from std_indic.NMT.utils import next_datai
 import os
 import opustools
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    final_data_path = next_datai(args.data_path)
+    final_data_path = next_datai(args.data_path)[1]
 
     mono = args.mono_langs.split(",") if args.mono_langs != "" else []
     pll = args.pll_langs.split(",") if args.pll_langs != "" else []
