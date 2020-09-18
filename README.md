@@ -1,4 +1,4 @@
-# Stanardizing Indic NLP
+# Standardizing Indic NLP
 
 **This Repo is in development stage currently.**
 
