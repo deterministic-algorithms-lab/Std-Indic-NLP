@@ -162,10 +162,10 @@ def get_pll_file(filename):
     """
     Returns the file having data parallel to that of filename
     """
-    matches = re.match(r'.*\.(..-..)\.(..).*', filename)
+    matches = re.match(r'(?:.*\.)*(..-..)\.(..).*', filename)
     lg_pair, cur_lg = matches.group(1), matches.group(2)
     pll_lang = [lg for lg in lg_pair.split('-') if lg != cur_lg][0]
-    return re.sub(r'(.*\.)(..-..)\.(..).*', r'\1\2.'+pll_lang, filename)
+    return re.sub(r'(?:.*\.)*(..-..)\.(..).*', r'\1.'+pll_lang, filename)
 
 def get_pll_pairs(para_dir) -> List[List[str]]:
     """
@@ -173,8 +173,9 @@ def get_pll_pairs(para_dir) -> List[List[str]]:
     """
     lis = []
     for f in os.listdir(para_dir):
-        if os.path.isfile(f):
+        if os.path.isfile(os.path.join(para_dir,f)):
             pair = set([f, get_pll_file(f)])
+            print(pair)
             if pair not in lis:
                 lis.append(pair)
     return lis
@@ -200,7 +201,9 @@ def get_shuf_command() -> str:
     """
     command = 'shuf --random-source=./rand '
     with open('./rand', 'w+') as f:
-        f.write(random.random())
+        for i in range(10000000):
+            f.write(str(random.randint(0,2))+'\n')
+        print("Made new random file")
     return command
     
 def shuf_pll(para_dir):
@@ -213,10 +216,10 @@ def shuf_pll(para_dir):
         for lg_file in pair:
             filepath = os.path.join(para_dir, lg_file)
             new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filepath)[1])
-            command = command+filepath+' > '+new_filepath
-            execute(command)
-            command = 'rm '+filepath
-            execute(command)
-            command = 'mv '+new_filepath+' '+filepath
-            execute(command)
+            to_execute = command+filepath+' > '+new_filepath
+            execute(to_execute)
+            to_execute = 'rm '+filepath
+            execute(to_execute)
+            to_execute = 'mv '+new_filepath+' '+filepath
+            execute(to_execute)
             print("Shuffled : ", filepath)
