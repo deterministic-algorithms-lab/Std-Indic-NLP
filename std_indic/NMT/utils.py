@@ -4,6 +4,7 @@ from std_indic.utils import append_file, get_all_files, execute
 import re
 import random
 
+
 def get_sorted_pair(lg_pair: str) -> str:
     """
     Takes in a string of form ".*(lg1-lg2).*" and returns a string of same form,
@@ -146,6 +147,7 @@ def split_single_pll(
     )
     execute(command)
 
+
 def have_same_lines(filepaths: List[str]) -> bool:
     """
     Returns true if both filepaths have same number of lines
@@ -155,17 +157,19 @@ def have_same_lines(filepaths: List[str]) -> bool:
         with open(filepath) as f:
             for i, l in enumerate(f):
                 pass
-            file_sizes.append(i+1)
+            file_sizes.append(i + 1)
     return all(sz == file_sizes[0] for sz in file_sizes)
+
 
 def get_pll_file(filename):
     """
     Returns the file having data parallel to that of filename
     """
-    matches = re.match(r'(?:.*\.)*(..-..)\.(..).*', filename)
+    matches = re.match(r"(?:.*\.)*(..-..)\.(..).*", filename)
     lg_pair, cur_lg = matches.group(1), matches.group(2)
-    pll_lang = [lg for lg in lg_pair.split('-') if lg != cur_lg][0]
-    return re.sub(r'(?:.*\.)*(..-..)\.(..).*', r'\1.'+pll_lang, filename)
+    pll_lang = [lg for lg in lg_pair.split("-") if lg != cur_lg][0]
+    return re.sub(r"(?:.*\.)*(..-..)\.(..).*", r"\1." + pll_lang, filename)
+
 
 def get_pll_pairs(para_dir) -> List[List[str]]:
     """
@@ -173,12 +177,13 @@ def get_pll_pairs(para_dir) -> List[List[str]]:
     """
     lis = []
     for f in os.listdir(para_dir):
-        if os.path.isfile(os.path.join(para_dir,f)):
+        if os.path.isfile(os.path.join(para_dir, f)):
             pair = set([f, get_pll_file(f)])
             print(pair)
             if pair not in lis:
                 lis.append(pair)
     return lis
+
 
 def check_files(para_dir) -> None:
     """
@@ -186,26 +191,27 @@ def check_files(para_dir) -> None:
     """
     lis = get_pll_pairs(para_dir)
 
-    x=True
+    x = True
     for pair in lis:
         if not have_same_lines(pair):
-            print(' does not have same line as '.join(pair))
-            x=False
+            print(" does not have same line as ".join(pair))
+            x = False
     if x:
-        print("All parallel files in ",para_dir,"  are correct.")
+        print("All parallel files in ", para_dir, "  are correct.")
 
 
 def get_shuf_command() -> str:
     """
     Returns partial command for shuffling a pair of language files in same order.
     """
-    command = 'shuf --random-source=./rand '
-    with open('./rand', 'w+') as f:
+    command = "shuf --random-source=./rand "
+    with open("./rand", "w+") as f:
         for i in range(10000000):
-            f.write(str(random.randint(0,2))+'\n')
+            f.write(str(random.randint(0, 2)) + "\n")
         print("Made new random file")
     return command
-    
+
+
 def shuf_pll(para_dir):
     """
     Shuffles parallel language data files in para_dir
@@ -215,11 +221,13 @@ def shuf_pll(para_dir):
         command = get_shuf_command()
         for lg_file in pair:
             filepath = os.path.join(para_dir, lg_file)
-            new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filepath)[1])
-            to_execute = command+filepath+' > '+new_filepath
+            new_filepath = os.path.join(
+                os.path.split(filepath)[0], "shuf." + os.path.split(filepath)[1]
+            )
+            to_execute = command + filepath + " > " + new_filepath
             execute(to_execute)
-            to_execute = 'rm '+filepath
+            to_execute = "rm " + filepath
             execute(to_execute)
-            to_execute = 'mv '+new_filepath+' '+filepath
+            to_execute = "mv " + new_filepath + " " + filepath
             execute(to_execute)
             print("Shuffled : ", filepath)
