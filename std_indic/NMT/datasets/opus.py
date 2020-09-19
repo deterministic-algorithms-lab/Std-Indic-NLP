@@ -27,23 +27,23 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--pll_langs",
-        default="en-pa,en-hi,bn-en,en-or,en-gu,en-mr,en-kn,en-te,en-ml,en-ta,\
-                       hi-pa,bn-pa,or-pa,gu-pa,mr-pa,kn-pa,pa-te,ml-pa,ta-pa,\
-                             bn-hi,hi-or,gu-hi,hi-mr,hi-kn,hi-te,hi-ml,hi-ta,\
-                                   bn-or,bn-gu,bn-mr,bn-kn,bn-te,bn-ml,bn-ta,\
-                                         gu-or,mr-or,kn-or,or-te,ml-or,or-ta,\
-                                               gu-mr,gu-kn,gu-te,gu-ml,gu-ta,\
-                                                     kn-mr,mr-te,ml-mr,mr-ta,\
-                                                           kn-te,kn-ml,kn-ta,\
-                                                                 ml-te,ta-te,\
-                                                                       ml-ta",
-        help="A comma separated list of language pair(lg1-lg2) whose data is to be downloaded.",
+        default= "en-pa,en-hi,bn-en,en-or,en-gu,en-mr,en-kn,en-te,en-ml,en-ta,"\
+                       "hi-pa,bn-pa,or-pa,gu-pa,mr-pa,kn-pa,pa-te,ml-pa,ta-pa,"\
+                             "bn-hi,hi-or,gu-hi,hi-mr,hi-kn,hi-te,hi-ml,hi-ta,"\
+                                   "bn-or,bn-gu,bn-mr,bn-kn,bn-te,bn-ml,bn-ta,"\
+                                         "gu-or,mr-or,kn-or,or-te,ml-or,or-ta,"\
+                                               "gu-mr,gu-kn,gu-te,gu-ml,gu-ta,"\
+                                                     "kn-mr,mr-te,ml-mr,mr-ta,"\
+                                                           "kn-te,kn-ml,kn-ta,"\
+                                                                 "ml-te,ta-te,"\
+                                                                       "ml-ta",
+        help="A comma separated list of language pair(lg1-lg2) whose data is to be downloaded.See code for what pairs will be downloaded by default.",
     )
 
     parser.add_argument(
         "--mono_langs",
         default="pa,hi,bn,or,gu,mr,kn,te,ml,ta,en",
-        help="A comma separated list of languages whose data is to be downloaded.",
+        help="A comma separated list of languages whose data is to be downloaded.See code for what will be downloaded by default.",
     )
 
     parser.add_argument(
@@ -53,6 +53,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--delete_metadata",
+        action='store_true',
         help="If this flag is provided, metadata that comes with parallel files will be deleted.",
     )
 
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     mono = args.mono_langs.split(",") if args.mono_langs != "" else []
     pll = args.pll_langs.split(",") if args.pll_langs != "" else []
 
-    if corpora is None:
+    if args.corpora is None:
         corpora = [None]
     else:
         copora = args.corpora.split(",")
@@ -82,7 +83,7 @@ if __name__ == "__main__":
             )
             corpora, file_n, total_size = mono_downloader.get_corpora_data()
             mono_downloader.download(corpora, file_n, total_size)
-            downloaded_filenames = [mono_downloader.make_file_name(c) for c in corpora]
+            downloaded_filenames = [mono_downloader.make_file_name(c) for c in data["corpora"]]
 
             # Extracting Files
             for filename in downloaded_filenames:
@@ -91,6 +92,8 @@ if __name__ == "__main__":
         # Joining together files
         for filepath in lg_files:
             append_file(filepath, os.path.join(final_data_path, "mono", lg + ".mono"))
+            if args.delete_old:
+                os.remove(filepath)
 
     # Parallel Part
     for lg_pair in pll:
@@ -113,7 +116,7 @@ if __name__ == "__main__":
                 sum([elem["size"] for elem in data["corpora"]])
             )
             pll_downloader.download(data["corpora"], len(data["corpora"]), c_size)
-            downloaded_filenames = [pll_downloader.make_file_name(c) for c in corpora]
+            downloaded_filenames = [pll_downloader.make_file_name(c) for c in data["corpora"]]
 
             # Extracting Files
             for filename in downloaded_filenames:
@@ -127,12 +130,18 @@ if __name__ == "__main__":
                     filepath,
                     os.path.join(final_data_path, "para", lg_pair + "." + f_lang),
                 )
+                if args.delete_old:
+                    os.remove(filepath)
+    
             elif filepath.endswith(prefix + "." + s_lang):
                 append_file(
                     filepath,
                     os.path.join(final_data_path, "para", lg_pair + "." + s_lang),
                 )
-            elif args.delete_metadata:
+                if args.delete_old:
+                    os.remove(filepath)    
+    
+            elif args.delete_metadata and os.path.isfile(filepath):
                 os.remove(filepath)
 
     if args.merge:

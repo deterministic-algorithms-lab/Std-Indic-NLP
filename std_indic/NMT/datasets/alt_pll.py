@@ -36,11 +36,12 @@ if __name__ == "__main__":
     # Unzip & Probably Clean dataset here, remember to delete files of previous pipeline step if delete_old is given.
     alt_path = "ALT-Parallel-Corpus-20191206.zip"
     extract_file(os.path.join(args.data_path, alt_path))
+    extracted_path = alt_path[:-len('.zip')]
 
     # Transform the cleaned dataset to the standard format, in data_path/datai/
-    en_path = os.path.join(args.data_path, alt_path, "data_en.txt")
-    bn_path = os.path.join(args.data_path, alt_path, "data_bg.txt")
-    hi_path = os.path.join(args.data_path, alt_path, "data_hi.txt")
+    en_path = os.path.join(args.data_path, extracted_path, "data_en.txt")
+    bn_path = os.path.join(args.data_path, extracted_path, "data_bg.txt")
+    hi_path = os.path.join(args.data_path, extracted_path, "data_hi.txt")
     final_data_path = next_datai(args.data_path)[1]
 
     shutil.copyfile(en_path, os.path.join(final_data_path, "para", "bn-en.en"))

@@ -24,21 +24,19 @@ def get_all_files(directory):
     return paths, names
 
 
-def shuf_mono(filename):
+def shuf_mono(filepath):
     """
     Shuffles a monolingual file
     """
     assert os.path.isfile(filename)
-
-
-def shuf_pll(lg_pair: str, para_folder):
-    """
-    Shuffles parallel language data files
-    """
-    lgs = lg_pair.split("-")
-    assert os.path.isfile(
-        os.path.join(para_folder, lg_pair + "." + lgs[0])
-    ) and os.path.isfile(os.path.join(para_folder, lg_pair + "." + lgs[1]))
+    new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filename)[1])
+    command = 'shuf '+filepath+' > '+new_filepath
+    execute(command)
+    command = 'rm '+filepath
+    execute(command)
+    command = 'mv '+new_filepath+' '+filepath
+    execute(command)
+    print("Shuffled ", filepath)
 
 
 def get_lang(filename):

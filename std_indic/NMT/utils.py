@@ -2,7 +2,7 @@ import os
 from typing import List
 from std_indic.utils import append_file, get_all_files, execute
 import re
-
+import random
 
 def get_sorted_pair(lg_pair: str) -> str:
     """
@@ -110,9 +110,11 @@ def joiner(
             if delete_old:
                 os.remove(src_file)
 
+    check_files(os.path.join(tgt_dir, mono_para))
+
 
 def split_single_pll(
-    filepath, lg1, lg2, target_dir=None, delimiter: str = "\t"
+    filepath, lg1, lg2, target_dir=None, delimiter: str = "\\t"
 ) -> None:
     """
     Splits a single file having parallel data, into two files.
@@ -143,3 +145,78 @@ def split_single_pll(
         + os.path.join(target_dir, pair + lg2)
     )
     execute(command)
+
+def have_same_lines(filepaths: List[str]) -> bool:
+    """
+    Returns true if both filepaths have same number of lines
+    """
+    file_sizes = []
+    for filepath in filepaths:
+        with open(filepath) as f:
+            for i, l in enumerate(f):
+                pass
+            file_sizes.append(i+1)
+    return all(sz == file_sizes[0] for sz in file_sizes)
+
+def get_pll_file(filename):
+    """
+    Returns the file having data parallel to that of filename
+    """
+    matches = re.match(r'.*\.(..-..)\.(..).*', filename)
+    lg_pair, cur_lg = matches.group(1), matches.group(2)
+    pll_lang = [lg for lg in lg_pair.split('-') if lg != cur_lg][0]
+    return re.sub(r'(.*\.)(..-..)\.(..).*', r'\1\2.'+pll_lang, filename)
+
+def get_pll_pairs(para_dir) -> List[List[str]]:
+    """
+    Returns a list pairs of parallel files in para_dir.
+    """
+    lis = []
+    for f in os.listdir(para_dir):
+        if os.path.isfile(f):
+            pair = set([f, get_pll_file(f)])
+            if pair not in lis:
+                lis.append(pair)
+    return lis
+
+def check_files(para_dir) -> None:
+    """
+    Checks if all pairs of language files have same size.
+    """
+    lis = get_pll_pairs(para_dir)
+
+    x=True
+    for pair in lis:
+        if not have_same_lines(pair):
+            print(' does not have same line as '.join(pair))
+            x=False
+    if x:
+        print("All parallel files in ",para_dir,"  are correct.")
+
+
+def get_shuf_command() -> str:
+    """
+    Returns partial command for shuffling a pair of language files in same order.
+    """
+    command = 'shuf --random-source=./rand '
+    with open('./rand', 'w+') as f:
+        f.write(random.random())
+    return command
+    
+def shuf_pll(para_dir):
+    """
+    Shuffles parallel language data files in para_dir
+    """
+    lis = get_pll_pairs(para_dir)
+    for pair in lis:
+        command = get_shuf_command()
+        for lg_file in pair:
+            filepath = os.path.join(para_dir, lg_file)
+            new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filename)[1])
+            command = command+filepath+' > '+new_filepath
+            execute(command)
+            command = 'rm '+filepath
+            execute(command)
+            command = 'mv '+new_filepath+' '+filepath
+            execute(command)
+            print("Shuffled : ", filepath)

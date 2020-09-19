@@ -25,41 +25,23 @@ if __name__ == "__main__":
         help="If this flag is provided, dataset from previous steps of pipeline will be deleted. Use this when you have less memory or huge dataset.",
     )
 
+    parser.add_argument(
+        "--pll_langs",
+        default="as-en,bn-en,gu-en,hi-en,kn-en,ml-en,mni-en,mr-en,or-en,pa-en,ta-en,te-en,ur-en",
+        help="A comma separated list of language pair(lg1-lg2) whose data is to be downloaded.See code for what pairs will be downloaded by default.",
+    )
+
+    parser.add_argument(
+        "--mono_langs",
+        default="as,bn,en,gu,hi,kn,ml,mni,mr,or,pa,ta,te,ur",
+        help="A comma separated list of languages whose data is to be downloaded.By default all data will be downloaded.",
+    )
     args = parser.parse_args()
 
     final_data_path = next_datai(args.data_path)[1]
 
-    lg_pairs = [
-        "as-en",
-        "bn-en",
-        "gu-en",
-        "hi-en",
-        "kn-en",
-        "ml-en",
-        "mni-en",
-        "mr-en",
-        "or-en",
-        "pa-en",
-        "ta-en",
-        "te-en",
-        "ur-en",
-    ]
-    mono = [
-        "as",
-        "bn",
-        "en",
-        "gu",
-        "hi",
-        "kn",
-        "ml",
-        "mni",
-        "mr",
-        "or",
-        "pa",
-        "ta",
-        "te",
-        "ur",
-    ]
+    lg_pairs = [] if args.pll_langs == '' else args.pll_langs.split(',')
+    mono = [] if args.mono_langs == '' else args.mono_langs.split(',')  
 
     # Monolingual Part
     for lg in mono:
@@ -92,8 +74,8 @@ if __name__ == "__main__":
 
         # Transform the cleaned dataset to the standard format, in data_path/datai/
         lg1, lg2 = pair.split("-")
-        if lg2 == "mni":
-            lg2 = "mp"  # For Manipuri
+        if lg1 == "mni":
+            lg1 = "mp"  # For Manipuri
 
         tsv_path = os.path.join(args.data_path, "pmindia.v1." + pair + ".tsv")
         split_single_pll(tsv_path, lg2, lg1, os.path.join(final_data_path, "para"))
