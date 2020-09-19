@@ -83,7 +83,7 @@ if __name__ == "__main__":
             )
             corpora, file_n, total_size = mono_downloader.get_corpora_data()
             mono_downloader.download(corpora, file_n, total_size)
-            downloaded_filenames = [mono_downloader.make_file_name(c) for c in data["corpora"]]
+            downloaded_filenames = [mono_downloader.make_file_name(c) for c in corpora]
 
             # Extracting Files
             for filename in downloaded_filenames:

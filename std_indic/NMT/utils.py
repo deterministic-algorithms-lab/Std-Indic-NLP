@@ -212,7 +212,7 @@ def shuf_pll(para_dir):
         command = get_shuf_command()
         for lg_file in pair:
             filepath = os.path.join(para_dir, lg_file)
-            new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filename)[1])
+            new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filepath)[1])
             command = command+filepath+' > '+new_filepath
             execute(command)
             command = 'rm '+filepath
