@@ -24,3 +24,4 @@ $ git clone https://github.com/deterministic-algorithms-lab/Std-Indic-NLP
 $ cd Std-Indic-NLP
 $ pip install -e ./
 ```
+See : [Discussion](https://www.reddit.com/r/MachineLearning/comments/iubdh1/prd_standardizing_indic_nlp_research/) on Reddit.
