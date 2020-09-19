@@ -29,12 +29,14 @@ def shuf_mono(filepath):
     Shuffles a monolingual file
     """
     assert os.path.isfile(filepath)
-    new_filepath = os.path.join(os.path.split(filepath)[0], 'shuf.'+os.path.split(filepath)[1])
-    command = 'shuf '+filepath+' > '+new_filepath
+    new_filepath = os.path.join(
+        os.path.split(filepath)[0], "shuf." + os.path.split(filepath)[1]
+    )
+    command = "shuf " + filepath + " > " + new_filepath
     execute(command)
-    command = 'rm '+filepath
+    command = "rm " + filepath
     execute(command)
-    command = 'mv '+new_filepath+' '+filepath
+    command = "mv " + new_filepath + " " + filepath
     execute(command)
     print("Shuffled ", filepath)
 
