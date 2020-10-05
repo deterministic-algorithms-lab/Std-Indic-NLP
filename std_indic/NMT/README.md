@@ -33,8 +33,10 @@ Repo to play Around : https://github.com/jerinphilip/ilmulti
 
 **Example Command** : 
 ```
-python3 Std-Indic-NLP/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --merge
+python3 Std-Indic-NLP/std_indic/NMT/datasets/pib_v0.2.py --data_path data_dir/ --delete_old --merge
 ```
+
+```data_dir``` must already exist. 
 
 ## PM-India Dataset
 
