@@ -6,3 +6,5 @@
 
 [0x0900 , 0x0902], # chandrabindu
 [0x0901 , 0x0902], # chandrabindu
+
+[0x007c , 0x0964]  # Replace pipe with poornaviram
