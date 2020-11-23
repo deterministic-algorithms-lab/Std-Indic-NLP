@@ -36,14 +36,15 @@ class resolve_cotractions(object):
         super().__init__()
         self.lang = lang
         self.contractions =  []
-        with open('contractions/'+lang+'.txt', 'r') as f:
-            text = f.readline().rstrip()
-            text = re.sub(r'\s+', r'\s', text) 
-            contractions.append(text.split(' ', 1))
-        
+        with open('./std_indic/contractions/'+lang+'.txt', 'r') as f:
+            for line in f.readlines():
+                text = line.rstrip()
+                text = re.sub(r'\s+', r' ', text) 
+                self.contractions.append(text.split(' ', 1))
+            
     def resolve_contractions(self, text):
         for contraction in self.contractions:
-            text = re.sub(re.compile(self.contraction[0]), re.compile(self.contraction[1]), text)
+            text = text.replace(contraction[0], contraction[1])
         return text
 
  
@@ -52,17 +53,17 @@ class resolve_chars(object):
         super().__init__()
         self.lang = lang
         self.normalizations = []
-        with open('unicode_normalization/'+lang+'.txt', 'r') as f :
+        with open('./std_indic/unicode_normalization/'+lang+'.txt', 'r') as f :
             content = f.read()
             replacements = re.findall(r'\[.+\]', content)
             for elem in replacements :
                 elem = elem.strip('[]')
                 elems = elem.split(' , ')
-                self.normalizations.append( [str_to_unicode(elem[0]), str_to_unicode(elem[1])] )
+                self.normalizations.append( [str_to_unicode(elems[0]), str_to_unicode(elems[1])] )
     
     def normalize(self, text) :
         for norm in self.normalizations:
-            text = re.sub( re.compile(norm[0]), re.compile(norm[1]), text)
+            text = text.replace( norm[0], norm[1])
         return text
     
 class resolve_group_chars(object):
@@ -70,22 +71,25 @@ class resolve_group_chars(object):
         super().__init__()
         self.lang = lang
         self.replaces = []
-        with open('unicode_normalization/groups'+lang+'.txt', 'r') as f :
+        with open('./std_indic/unicode_normalization/groups/'+lang+'.txt', 'r') as f :
             for line in f.readlines():
-                line = re.sub(r'\s+',r'\s',line.rstrip())
-                line = line.split('#')[0]
+                line = re.sub(r'\s+',r' ',line.rstrip())
+                line = line.split('#')[0].rstrip()
+                #print(line)
                 original, replacement = line.split(' ')
                 match_str = self.make_pattern(original)
                 repl_str = self.make_pattern(replacement, True)
-            self.replaces.append((match_str, repl_str)) 
+                print(match_str, repl_str)
+                self.replaces.append((match_str, repl_str)) 
     
     def make_pattern(self, original, is_replacement=False):
         original_parts = original.split(',')
         match_str = ''
+        #print(original_parts)
         for part in original_parts:
             if is_replacement:
                 if not part.startswith('0x'):
-                    match_str += '\\'+part
+                    match_str += '\\g<'+part+'>'
                 else:
                     match_str += str_to_unicode(part)
             else :               
@@ -93,11 +97,12 @@ class resolve_group_chars(object):
                     match_str += '('+str_to_unicode(part)+')'
                 else:
                     match_str += '([' + str_to_unicode(part.split('-')[0]) + '-' + str_to_unicode(part.split('-')[1]) + '])'
-       return match_str
+        return match_str
 
     def normalize(self, text) :
         for norm in self.replaces:
-            text = re.sub( re.compile(norm[0]), re.compile(norm[1]), text)
+            print(norm[0], norm[1])
+            text = re.sub( norm[0], norm[1], text)
         return text
  
 
