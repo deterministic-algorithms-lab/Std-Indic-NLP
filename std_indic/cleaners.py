@@ -75,15 +75,18 @@ class resolve_group_chars(object):
                 line = re.sub(r'\s+',r'\s',line.rstrip())
                 original, replacement = line.split(' ')
                 match_str = self.make_pattern(original)
-                repl_str = self.make_pattern(replacement)
+                repl_str = self.make_pattern(replacement, True)
             self.replaces.append((match_str, repl_str)) 
     
     def make_pattern(self, original, is_replacement=False):
         original_parts = original.split(',')
         match_str = ''
         for part in original_parts:
-            if not part.startswith('0x') and is_replacement:
-                match_str += '\\'+part
+            if is_replacement:
+                if not part.startswith('0x'):
+                    match_str += '\\'+part
+                else:
+                    match_str += str_to_unicode(part)
             else :               
                 if '-' not in part:
                     match_str += '('+str_to_unicode(part)+')'
