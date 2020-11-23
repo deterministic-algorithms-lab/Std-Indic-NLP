@@ -178,7 +178,7 @@ def get_pll_pairs(para_dir) -> List[List[str]]:
     lis = []
     for f in os.listdir(para_dir):
         if os.path.isfile(os.path.join(para_dir, f)):
-            pair = set([f, get_pll_file(f)])
+            pair = set([ os.path.join(para_dir,f), os.path.join(para_dir,get_pll_file(f)) ])
             print(pair)
             if pair not in lis:
                 lis.append(pair)
