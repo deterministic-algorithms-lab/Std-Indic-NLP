@@ -73,6 +73,7 @@ class resolve_group_chars(object):
         with open('unicode_normalization/groups'+lang+'.txt', 'r') as f :
             for line in f.readlines():
                 line = re.sub(r'\s+',r'\s',line.rstrip())
+                line = line.split('#')[0]
                 original, replacement = line.split(' ')
                 match_str = self.make_pattern(original)
                 repl_str = self.make_pattern(replacement, True)
